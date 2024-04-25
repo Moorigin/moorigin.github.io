@@ -32,7 +32,7 @@ iface eth1 inet static
 address 192.168.2.10
 netmask 255.255.255.0
 gateway 192.168.2.1
-dns-nameservers 223.5.5.5 114.114.114.114
+dns-nameservers 192.168.2.1
 ```
 > 前两行声明我们正在为 `eth1` 网络接口设置一个静态IP地址  
 > `address` 填入想更改的IP  
@@ -49,16 +49,18 @@ vim /etc/apt/sources.list
 ```
 2、注释官方源并添加清华源  
 ```
-[# 默认注释了源码镜像以提高apt update速度，如有需要可自行取消注释
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-updates main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-backports main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-backports main restricted universe multiverse
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
 
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-security main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ jammy-security main restricted universe multiverse](https://mirrors.tuna.tsinghua.edu.cn/help/debian/)
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware
+
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware
+
+deb https://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+# deb-src https://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
 ```
 3、更新软件列表  
 ```
