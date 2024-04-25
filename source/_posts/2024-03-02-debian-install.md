@@ -66,7 +66,7 @@ sh get-docker.sh
 ```
 
 ### 手动安装
-1、Docker安装    
+#### 1、Docker安装    
 
 - 卸载旧版本（如果机器上没装过，则忽略）
 
@@ -105,7 +105,8 @@ apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 此时可以使用 docker version 命令检查是否安装成功
 
-2、Docker-Compose安装  
+#### 2、Docker-Compose安装  
+
 因为我们已经安装了 docker-compose-plugin，所以 Docker 目前已经自带 docker compose 命令，基本上可以替代 docker-compose：  
 ```
 root@debian ~ # docker compose version
