@@ -13,18 +13,7 @@ author: Moorigin
 安装Debian的第一步从[官方网站](https://www.debian.org/releases/bookworm/debian-installer/)下载对应的ISO（本文使用 Debian12 操作），然后用工具烧录进U盘。  
 具体安装步骤和细节可以查看：[寒山](https://www.nicvos.com/archives/10.html)、[CSDN](https://blog.csdn.net/weixin_44200186/article/details/131970040)
 
-## 配置信赖的DNS服务器  
-执行 `vi /etc/resolv.conf` ,添加以下内容:  
-```
-nameserver 223.5.5.5
-nameserver 114.114.114.114
-```
-> 223.5.5.5是阿里DNS  
-> 114.114.114.114是国内老牌DNS  
-
-测试能否ping通 `www.baidu.com`
-
-## 配置系统静态IP  
+## 配置系统静态IP及DNS服务  
 执行 `vim /etc/network/interfaces` ,添加以下内容:
 ```
 auto eth1
@@ -32,7 +21,7 @@ iface eth1 inet static
 address 192.168.2.10
 netmask 255.255.255.0
 gateway 192.168.2.1
-dns-nameservers 192.168.2.1
+dns-nameservers 192.168.2.1 223.5.5.5
 ```
 > 前两行声明我们正在为 `eth1` 网络接口设置一个静态IP地址  
 > `address` 填入想更改的IP  
@@ -137,7 +126,6 @@ Docker Compose version v2.18.1
 > 更加具体的步骤和细节可以到官网查看：[docker安装](https://docs.docker.com/engine/install/debian/)、[docker-compose安装](https://docs.docker.com/compose/install/standalone/)。  
 
 ## 更换Docker源
-1、以清华源为例编辑 /etc/apt/sources.list 文件  
 Docker中国区官方镜像:  
 https://registry.docker-cn.com  
 ustc:  
