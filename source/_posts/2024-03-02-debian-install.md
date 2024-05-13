@@ -61,8 +61,9 @@ apt update
 apt仓库提供的docker-io等软件包是社区构建的非官方版本，要安装官方版，需要多几个步骤。
 ### 使用官方安装脚本自动安装
 ```
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
+curl -sSL https://get.docker.com | bash
+systemctl enable docker
+systemctl start docker
 ```
 
 ### 手动安装
