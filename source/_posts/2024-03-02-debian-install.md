@@ -59,11 +59,17 @@ apt update
 ## 安装Docker及Docker-Compose
 虽然阿里ECS之类的云主机大多预装了docker，但是海外主机、自己装的linux系统大多还是没有docker的，我们从安装开始。以 `Debian` 为例。  
 apt仓库提供的docker-io等软件包是社区构建的非官方版本，要安装官方版，需要多几个步骤。
-### 使用官方安装脚本自动安装
+### 使用官方安装脚本自动安装  
+> 不知道从什么时候开始官方脚本已经默认也安装了 docker compose, 不需要后面的手动安装了, 因此已删除多余的内容
+> 也就是说, 只需要执行下面的一键脚本
+> 注意是 docker compose 而不是 docker-compose. 执行命令时候也没有这个杠
 ```
-curl -sSL https://get.docker.com | bash
-systemctl enable docker
-systemctl start docker
+curl -fsSL https://get.docker.com | bash -s docker
+```
+可在此命令后附带--mirror参数设置镜像源，以提高国内服务器下载docker的速度  
+如使用阿里云镜像:
+```
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
 
 ### 手动安装
