@@ -59,7 +59,7 @@ apt update
 ## 安装Docker及Docker-Compose
 虽然阿里ECS之类的云主机大多预装了docker，但是海外主机、自己装的linux系统大多还是没有docker的，我们从安装开始。以 `Debian` 为例。  
 apt仓库提供的docker-io等软件包是社区构建的非官方版本，要安装官方版，需要多几个步骤。
-### 使用官方安装脚本自动安装  
+### 使用官方安装脚本安装  
 > 不知道从什么时候开始官方脚本已经默认也安装了 docker compose, 不需要后面的手动安装了, 因此已删除多余的内容  
 > 也就是说, 只需要执行下面的一键脚本  
 > 注意是 docker compose 而不是 docker-compose. 执行命令时候也没有这个杠  
@@ -71,69 +71,25 @@ curl -fsSL https://get.docker.com | bash -s docker
 ```
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
-
-### 手动安装
-#### 1、Docker安装    
-
-- 卸载旧版本（如果机器上没装过，则忽略）
-
+### 修改Docker配置  
+> 以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘（泪的教训）  
 ```
-apt remove -y docker docker-engine docker.io containerd runc
-```
+cat > /etc/docker/daemon.json <<EOF
+{
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "20m",
+        "max-file": "3"
+    },
+    "ipv6": true,
+    "fixed-cidr-v6": "fd00:dead:beef:c0::/80",
+    "experimental":true,
+    "ip6tables":true
+}
+EOF
+``` 
 
-- 安装一些必备的软件包
-
-```
-apt update
-apt upgrade -y
-apt install curl vim wget gnupg dpkg apt-transport-https lsb-release ca-certificates
-```
-
-- 添加docker官方的gpg
-
-```
-curl -sSL https://download.docker.com/linux/debian/gpg | gpg --dearmor > /usr/share/keyrings/docker-ce.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce.gpg] https://download.docker.com/linux/debian $(lsb_release -sc) stable" > /etc/apt/sources.list.d/docker.list
-```
-
-- 国内机器可以用 `清华TUNA` 的国内源
-
-```
-curl -sS https://download.docker.com/linux/debian/gpg | gpg --dearmor > /usr/share/keyrings/docker-ce.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-ce.gpg] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian $(lsb_release -sc) stable" > /etc/apt/sources.list.d/docker.list
-```
-
-- 用新添加的docker软件包来进行升级更新，然后通过apt源安装docker
-
-```
-apt update
-apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-```
-
-此时可以使用 docker version 命令检查是否安装成功
-
-#### 2、Docker-Compose安装  
-
-因为我们已经安装了 docker-compose-plugin，所以 Docker 目前已经自带 docker compose 命令，基本上可以替代 docker-compose：  
-```
-root@debian ~ # docker compose version
-Docker Compose version v2.18.1
-```
-如果某些镜像或命令不兼容，则我们还可以单独安装 Docker Compose：  
-我们可以使用 Docker 官方发布的 Github 直接安装最新版本：  
-```
-curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-```
-此时可以使用 docker-compose version 命令检查是否安装成功：  
-```
-root@debian ~ # docker-compose version
-Docker Compose version v2.18.1
-```
-
-> 更加具体的步骤和细节可以到官网查看：[docker安装](https://docs.docker.com/engine/install/debian/)、[docker-compose安装](https://docs.docker.com/compose/install/standalone/)。  
-
-## 更换Docker源
+### 更换Docker源
 Docker中国区官方镜像:  
 https://registry.docker-cn.com  
 ustc:  
