@@ -86,7 +86,11 @@ cat > /etc/docker/daemon.json <<EOF
     "ip6tables":true
 }
 EOF
-``` 
+```
+重启docker  
+```
+systemctl restart docker
+```
 
 ### 更换Docker源
 Docker中国区官方镜像:  
