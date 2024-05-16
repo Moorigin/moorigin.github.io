@@ -57,8 +57,7 @@ apt update
 ```
 
 ## 安装Docker及Docker-Compose
-虽然阿里ECS之类的云主机大多预装了docker，但是海外主机、自己装的linux系统大多还是没有docker的，我们从安装开始。以 `Debian` 为例。  
-apt仓库提供的docker-io等软件包是社区构建的非官方版本，要安装官方版，需要多几个步骤。
+虽然阿里ECS之类的云主机大多预装了docker，但是海外主机、自己装的linux系统大多还是没有docker的，我们从安装开始。  
 ### 使用官方安装脚本安装  
 > 不知道从什么时候开始官方脚本已经默认也安装了 docker compose, 不需要后面的手动安装了, 因此已删除多余的内容  
 > 也就是说, 只需要执行下面的一键脚本  
@@ -72,7 +71,7 @@ curl -fsSL https://get.docker.com | bash -s docker
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 ```
 ### 修改Docker配置  
-> 以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘（泪的教训）  
+以下配置会增加一段自定义内网 IPv6 地址，开启容器的 IPv6 功能，以及限制日志文件大小，防止 Docker 日志塞满硬盘（泪的教训）  
 ```
 cat > /etc/docker/daemon.json <<EOF
 {
